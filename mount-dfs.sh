@@ -5,9 +5,17 @@ SERVER="amkcambodia.com"
 CREDENTIALS_FILE="/etc/smb-credentials"
 USERNAME="$(whoami)"      # Current Linux login username
 
-# === Mount Collaboration Share ===
+# === Mount Collaboration Share "Q" ===
 COLLAB_SHARE_PATH="amkdfs/Collaboration/AHO/ITI"
 COLLAB_MOUNTPOINT="/media/Collaboration"
+
+# === Mount Department Share "N" ===
+COLLAB_SHARE_PATH="amkdfs/Dept_Doc\CIO\ITI\"
+COLLAB_MOUNTPOINT="/media/Department"
+
+# === Mount Home Drive "H" ===
+HOME_SHARE_PATH="amkdfs/StaffDoc/ITD/$USERNAME"
+HOME_MOUNTPOINT="/media/Home"
 
 # Create mount point for Collaboration
 sudo mkdir -p "$COLLAB_MOUNTPOINT"
@@ -24,11 +32,16 @@ else
 fi
 
 # === Mount Home Drive ===
-HOME_SHARE_PATH="amkdfs/StaffDoc/ITD/$USERNAME"
-HOME_MOUNTPOINT="/media/home_${USERNAME}"
 
 # Create mount point for Home Drive
-sudo mkdir -p "$HOME_MOUNTPOINT"
+if [ ! -d "$HOME_MOUNTPOINT" ]; then
+  echo "Creating mount point for Home Drive: $HOME_MOUNTPOINT"
+  sudo mkdir -p "$HOME_MOUNTPOINT"
+fi
+
+# Debugging: Check if share exists
+echo "Checking Home Share: //$SERVER/$HOME_SHARE_PATH"
+smbclient "//$SERVER/$HOME_SHARE_PATH" -U "$USERNAME" -c "exit"
 
 # Mount Home Drive
 sudo mount -t cifs "//$SERVER/$HOME_SHARE_PATH" "$HOME_MOUNTPOINT" \
