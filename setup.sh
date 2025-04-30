@@ -1,28 +1,29 @@
 #!/bin/bash
 
-# Run as root
+# ----------------- Run as root --------------------------------- #
 if [[ $EUID -ne 0 ]]; then
    echo "❌ Please run as root (sudo $0)"
    exit 1
 fi
 
-echo "==== AMK DFS pam_mount Auto-Mount Setup ===="
-
-# --- Prompt user for paths ---
-read -p "Enter Collaboration Drive Q Share (e.g. amkdfs/Collaboration/AHO/ITI): " COLLAB_PATH
-read -p "Enter Department Drive N Share (e.g. amkdfs/Dept_Doc/CIO/ITI): " DEPT_PATH
-read -p "Enter Home Drive Base Path (e.g. amkdfs/StaffDoc/ITD): " HOME_PATH
-
-# Install required packages
+# ------------------ Install required packages ------------------ #
 echo "🔧 Installing required packages..."
 apt update && apt install -y libpam-mount cifs-utils
 
-# Backup and generate new pam_mount.conf.xml
+# ------------------ Backup pam_mount.conf.xml ------------------ #
 PAM_CONF="/etc/security/pam_mount.conf.xml"
 BACKUP_CONF="${PAM_CONF}.bak.$(date +%s)"
 cp "$PAM_CONF" "$BACKUP_CONF"
 
-echo "🔧 Generating pam_mount.conf.xml..."
+# ------------------ Prompt user for paths ---------------------- #
+echo "==== AMK DFS pam_mount Auto-Mount Setup ===="
+
+read -p "Enter Collaboration Drive Q Share (e.g. amkdfs/Collaboration/AHO/ITI): " COLLAB_PATH
+read -p "Enter Department Drive N Share (e.g. amkdfs/Dept_Doc/CIO/ITI): " DEPT_PATH
+read -p "Enter Home Drive Base Path (e.g. amkdfs/StaffDoc/ITD): " HOME_PATH
+
+# ------------------- Generate Mount path ----------------------- #
+echo "🔧 Generating pam_mount.conf.xml... to path /etc/security/pam_mount.conf.xml"
 cat > "$PAM_CONF" <<EOF
 <?xml version="1.0" encoding="utf-8" ?>
 <pam_mount>
