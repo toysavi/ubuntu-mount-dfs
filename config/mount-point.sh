@@ -1,6 +1,6 @@
 #!/bin/bash
 
-tee "$MOUNT_SCRIPT" > /dev/null <<EOF
+sudo tee "$MOUNT_SCRIPT" > /dev/null <<EOF
 #!/bin/bash
 
 COLLAB_SHARE_PATH="$COLLAB_SHARE_PATH"
@@ -26,3 +26,5 @@ mountpoint -q "\$COLLAB_MOUNTPOINT" && echo "✅ Collaboration mounted at \$COLL
 mountpoint -q "\$DEPT_MOUNTPOINT" && echo "✅ Department mounted at \$DEPT_MOUNTPOINT" || echo "❌ Department mount failed"
 mountpoint -q "\$HOME_MOUNTPOINT" && echo "✅ Home Drive mounted at \$HOME_MOUNTPOINT" || echo "❌ Home Drive mount failed"
 EOF
+sudo chmod +x "$MOUNT_SCRIPT"
+echo "✅ Done. Run with: sudo $MOUNT_SCRIPT"

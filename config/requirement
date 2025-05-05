@@ -1,20 +1,2 @@
-#!/bin/bash
-
-# ----------------- Run as root --------------------------------- #
-if [[ $EUID -ne 0 ]]; then
-   echo "❌ Please run as root (sudo $0)"
-   exit 1
-fi
-
-echo "==== Initial DFS Mount Script Setup ===="
-
-# Check for cifs-utils dependency
-if ! dpkg -s cifs-utils >/dev/null 2>&1; then
-    echo "Installing required package: cifs-utils"
-    sudo apt update && sudo apt install cifs-utils -y
-fi
-
-# ------------------ Backup pam_mount.conf.xml ------------------ #
-PAM_CONF="/etc/security/pam_mount.conf.xml"
-BACKUP_CONF="${PAM_CONF}.bak.$(date +%s)"
-cp "$PAM_CONF" "$BACKUP_CONF"
+cifs-utils
+libpam-mount
