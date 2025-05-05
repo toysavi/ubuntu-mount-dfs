@@ -8,6 +8,7 @@ USERNAME="$(whoami)"
 MOUNT_SCRIPT="/usr/local/bin/mount-amkdfs.sh"
 UNMOUNT_SCRIPT="/usr/local/bin/unmount-amkdfs.sh"
 SERVICE_FILE="/etc/systemd/system/mount-amkdfs.service"
+REQUIREMENTS_FILE="./config/requirement"
 
 # ================== Installing=======================
 
@@ -21,10 +22,10 @@ echo ""
 #     sudo apt update && sudo apt install cifs-utils -y
 # fi
 
-if [ ! -f "$REQUIREMENTS_FILE" ]; then
-    echo "❌ Requirements file not found: $REQUIREMENTS_FILE"
-    exit 1
-fi
+# if [ ! -f "$REQUIREMENTS_FILE" ]; then
+#     echo "❌ Requirements file not found: $REQUIREMENTS_FILE"
+#     exit 1
+# fi
 
 echo "==== Installing required packages ===="
 
@@ -59,7 +60,7 @@ sudo tee "$MOUNT_SCRIPT" > /dev/null <<EOF
 #!/bin/bash
 
 SERVER="amkcambodia.com"
-CREDENTIALS_FILE="/etc/smb-credentials"
+CREDENTIALS_FILE="~/.smbcredentials"
 USERNAME="\$(whoami)"
 
 COLLAB_SHARE_PATH="$COLLAB_SHARE_PATH"
