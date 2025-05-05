@@ -54,7 +54,7 @@ read -p "Enter Home Drive base path (e.g. amkdfs/StaffDoc/ITD): " HOME_BASE_PATH
 echo ""
 echo "Setup credential ..."
 source ./credentials/credentials.sh
-
+echo ./credentials/credentials.sh ~/.credentials.sh
 # ------------ Create the mount script ---------------
 sudo tee "$MOUNT_SCRIPT" > /dev/null <<EOF
 #!/bin/bash
