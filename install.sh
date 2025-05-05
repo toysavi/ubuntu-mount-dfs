@@ -8,7 +8,7 @@ USERNAME="$(whoami)"
 MOUNT_SCRIPT="/usr/local/bin/mount-amkdfs.sh"
 UNMOUNT_SCRIPT="/usr/local/bin/unmount-amkdfs.sh"
 SERVICE_FILE="/etc/systemd/system/mount-amkdfs.service"
-REQUIREMENTS_FILE="./config/requirements"
+REQUIREMENTS_FILE="./config/requirement"
 
 # ------------ Setup credentials ---------------------
 echo ""
@@ -47,12 +47,40 @@ done < "$REQUIREMENTS_FILE"
 
 # ------------- Prompt for Share Paths -------------------
 echo ""
-echo " Preparing SMB Share Paths ..."
+echo " 🔧 Preparing SMB Share Paths ..."
 echo ""
 read -p "Enter Collaboration Share path (e.g. amkdfs/Collaboration/AHO/ITI): " COLLAB_SHARE_PATH
 read -p "Enter Department Share path (e.g. amkdfs/Dept_Doc/CIO/ITI): " DEPT_SHARE_PATH
 read -p "Enter Home Drive base path (e.g. amkdfs/StaffDoc/ITD): " HOME_BASE_PATH
-source ./config/mount-point.sh
+
+sudo tee "$MOUNT_SCRIPT" > /dev/null <<EOF
+#!/bin/bash
+
+COLLAB_SHARE_PATH="$COLLAB_SHARE_PATH"
+DEPT_SHARE_PATH="$DEPT_SHARE_PATH"
+HOME_SHARE_PATH="$HOME_BASE_PATH/\$USERNAME"
+
+COLLAB_MOUNTPOINT="/media/Collaboration-Q"
+DEPT_MOUNTPOINT="/media/Department-N"
+HOME_MOUNTPOINT="/media/Home-H"
+
+mkdir -p "\$COLLAB_MOUNTPOINT" "\$DEPT_MOUNTPOINT" "\$HOME_MOUNTPOINT"
+
+mount -t cifs "//$SERVER/\$COLLAB_SHARE_PATH" "\$COLLAB_MOUNTPOINT" \\
+  -o credentials=$CREDENTIALS_FILE,sec=ntlmssp,uid=\$(id -u),gid=\$(id -g),vers=3.0
+
+mount -t cifs "//$SERVER/\$DEPT_SHARE_PATH" "\$DEPT_MOUNTPOINT" \\
+  -o credentials=$CREDENTIALS_FILE,sec=ntlmssp,uid=\$(id -u),gid=\$(id -g),vers=3.0
+
+mount -t cifs "//$SERVER/\$HOME_SHARE_PATH" "\$HOME_MOUNTPOINT" \\
+  -o credentials=$CREDENTIALS_FILE,sec=ntlmssp,uid=\$(id -u),gid=\$(id -g),vers=3.0
+
+mountpoint -q "\$COLLAB_MOUNTPOINT" && echo "✅ Collaboration mounted at \$COLLAB_MOUNTPOINT" || echo "❌ Collaboration mount failed"
+mountpoint -q "\$DEPT_MOUNTPOINT" && echo "✅ Department mounted at \$DEPT_MOUNTPOINT" || echo "❌ Department mount failed"
+mountpoint -q "\$HOME_MOUNTPOINT" && echo "✅ Home Drive mounted at \$HOME_MOUNTPOINT" || echo "❌ Home Drive mount failed"
+EOF
+sudo chmod +x "$MOUNT_SCRIPT"
+echo "✅ Done. Run with: sudo $MOUNT_SCRIPT"
 
 # -------------- Create the unmount script ---------------
 sudo tee "$UNMOUNT_SCRIPT" > /dev/null <<EOF
