@@ -22,6 +22,8 @@ This script automates the setup of SMB (CIFS) network shares for **HQ Staff**, *
 1. **Clone the repository** and make sure scripts are executable:
 
    ```bash
+   git clone https://github.com/toysavi/ubuntu-mount-dfs.git
+   cd ubuntu-mount-dfs/mount-dfs
    chmod +x install.sh
     ```
 2. Run the setup script:
