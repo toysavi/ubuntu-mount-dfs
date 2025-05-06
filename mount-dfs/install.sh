@@ -114,6 +114,8 @@ case "$SETUP_CHOICE" in
         # --- Reload and enable the service ---
         sudo systemctl daemon-reload
         sudo systemctl enable mount-amkdfs.service
+        
+        sudo "$MOUNT_SCRIPT"
 
         echo ""
         echo "✅ Mount and unmount scripts created at /usr/local/bin/"
@@ -133,20 +135,6 @@ case "$SETUP_CHOICE" in
         ;;
 esac
 
-# Add HQ mount
-sudo chmod +x "$MOUNT_SCRIPT"
-echo "✅ Done. Run with: sudo $MOUNT_SCRIPT"
-
-# # ------------- Prompt for Share Paths -------------------
-# echo ""
-# echo " 🔧 Preparing SMB Share Paths ..."
-# echo ""
-# read -p "Enter Collaboration Share path (e.g. amkdfs/Collaboration/AHO/ITI): " COLLAB_SHARE_PATH
-# read -p "Enter Department Share path (e.g. amkdfs/Dept_Doc/CIO/ITI): " DEPT_SHARE_PATH
-# read -p "Enter Home Drive base path (e.g. amkdfs/StaffDoc/ITD): " HOME_BASE_PATH
-# # Add HQ mount 
-# sudo chmod +x "$MOUNT_SCRIPT"
-# echo "✅ Done. Run with: sudo $MOUNT_SCRIPT"
 
 
 
