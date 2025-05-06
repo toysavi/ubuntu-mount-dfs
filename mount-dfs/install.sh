@@ -1,13 +1,5 @@
 #!/bin/bash
 
-# === Common Variables ===
-SERVER="amkcambodia.com"
-CREDENTIALS_FILE="~/.smbcredentials"
-USERNAME="$(whoami)"
-MOUNT_SCRIPT="/usr/local/bin/mount-amkdfs.sh"
-UNMOUNT_SCRIPT="/usr/local/bin/unmount-amkdfs.sh"
-SERVICE_FILE="/etc/systemd/system/mount-amkdfs.service"
-
 # ------------ Setup credentials ---------------------
 echo ""
 echo "Setup credential ..."
@@ -21,7 +13,7 @@ echo "Preparing dependency ..."
 echo ""
 
 # Export path for dependency.sh to use
-export REQUIREMENTS_FILE=".evn/requirement"
+export REQUIREMENTS_FILE=".env/requirement"
 
 # Run the dependency installer
 source ./lib/dependency.sh
@@ -39,16 +31,20 @@ read -rp "Enter choice [1-3]: " SETUP_CHOICE
 
 case "$SETUP_CHOICE" in
     1)
-        COLLAB_SHARE_PATH="amkdfs/Collaboration/AHO/ITI"
-        DEPT_SHARE_PATH="amkdfs/Dept_Doc/CIO/ITI"
-        HOME_BASE_PATH="amkdfs/StaffDoc/ITD"
         echo "✅ HQ Staff setup selected."
+        source .env/hq_mount_path
+        HQ_COLLAB_SHARE_PATH="$HQ_COLLAB_SHARE_PATH"
+        HQ_DEPT_SHARE_PATH="$HQ_DEPT_SHARE_PATHTI"
+        HQ_HOME_BASE_PATH="$HQ_HOME_BASE_PATH"
+        source ./config/hq/hq-install.sh
         ;;
     2)
-        COLLAB_SHARE_PATH="amkdfs/Collaboration/Branch"
-        DEPT_SHARE_PATH="amkdfs/Dept_Doc/Branch"
-        HOME_BASE_PATH="amkdfs/StaffDoc/Branch"
         echo "✅ Branch Staff setup selected."
+        source .env/branchs_mount_path
+        BRANCHS_COLLAB_SHARE_PATH="$BRANCHS_COLLAB_SHARE_PATH"
+        BRANCHS_DEPT_SHARE_PATH="$BRANCHS_CUD_SHARE_PATH"
+        BRANCHS_HOME_BASE_PATH="$BRANCHS_BPR_SHARE_PATH"
+        source ./config/branch/branchs-install.sh
         ;;
     3)
         read -rp "Enter Collaboration Share path (e.g. amkdfs/Collaboration/AHO/ITI): " COLLAB_SHARE_PATH
