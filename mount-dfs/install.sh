@@ -32,11 +32,28 @@ read -rp "Enter choice [1-3]: " SETUP_CHOICE
 case "$SETUP_CHOICE" in
     1)
         echo "✅ HQ Staff setup selected."
-        source .env/hq_mount_path
-        HQ_COLLAB_SHARE_PATH="$HQ_COLLAB_SHARE_PATH"
-        HQ_DEPT_SHARE_PATH="$HQ_DEPT_SHARE_PATHTI"
-        HQ_HOME_BASE_PATH="$HQ_HOME_BASE_PATH"
-        source ./config/hq/hq-install.sh
+
+        # Backup old scripts if they exist
+        timestamp=$(date +%Y%m%d_%H%M)
+        [ -f "$MOUNT_SCRIPT" ] && cp "$MOUNT_SCRIPT" "$MOUNT_SCRIPT.bak.$timestamp"
+        [ -f "$UMOUNT_SCRIPT" ] && cp "$UMOUNT_SCRIPT" "$UMOUNT_SCRIPT.bak.$timestamp"
+
+        # Load mount and unmount logic if needed
+        source .env/mount_script
+        source .env/umount_script
+
+        # Copy new scripts
+        echo ""
+        echo "🔧 Creating mount and unmount scripts..."
+        cp ./config/hq/hq-install.sh "$MOUNT_SCRIPT"
+        cp ./scripts/umount-hq.sh "$UMOUNT_SCRIPT"
+
+        # Make them executable
+        sudo chmod +x "$MOUNT_SCRIPT"
+        sudo chmod +x "$UMOUNT_SCRIPT"
+
+        echo "✅ Mount script installed at: $MOUNT_SCRIPT"
+        echo "✅ Unmount script installed at: $UMOUNT_SCRIPT"
         ;;
     2)
         echo "✅ Branch Staff setup selected."
