@@ -44,8 +44,8 @@ This script automates the setup of SMB (CIFS) network shares for **HQ Staff**, *
     sudo systemctl stop mount-amkdfs.service   
     ```
 ## 🗂 Folder Structure
-    ```bash
-        
+    
+
     ├── install.sh                  # Main installer script
     ├── lib/
     │   └── credentials.sh          # Sets user credentials
@@ -62,7 +62,7 @@ This script automates the setup of SMB (CIFS) network shares for **HQ Staff**, *
     │   ├── mount_script            # Path to final mount script
     │   ├── umount_script           # Path to final unmount script
     │   └── services_file           # Path to systemd service
-```
+  
 ## ⚙️ Requirements
 - Bash
 - cifs-utils installed (handled via dependency.sh)
