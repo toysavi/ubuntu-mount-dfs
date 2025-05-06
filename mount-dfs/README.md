@@ -16,6 +16,10 @@ This script automates the setup of SMB (CIFS) network shares for **HQ Staff**, *
   - Systemd service generation
 
 ---
+## ⚙️ Requirements
+- Bash
+- cifs-utils installed (handled via dependency.sh)
+- sudo privileges
 
 ## 🚀 How to Use
 
@@ -65,8 +69,4 @@ This script automates the setup of SMB (CIFS) network shares for **HQ Staff**, *
     │   ├── umount_script           # Path to final unmount script
     │   └── services_file           # Path to systemd service
   
-## ⚙️ Requirements
-- Bash
-- cifs-utils installed (handled via dependency.sh)
-- sudo privileges
 
