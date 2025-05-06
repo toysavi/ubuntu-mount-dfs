@@ -1,4 +1,4 @@
-# How to install/use the script(s)# 📁 SMB Auto-Mount Script
+# 📁 SMB Auto-Mount Script
 
 This script automates the setup of SMB (CIFS) network shares for **HQ Staff**, **Branch Staff**, or a **Custom Setup**. It creates mount/unmount scripts, sets up systemd services for automatic mounting, and handles user credentials securely.
 
