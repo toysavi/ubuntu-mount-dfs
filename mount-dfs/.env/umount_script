@@ -1,1 +1,1 @@
-UNMOUNT_SCRIPT="/usr/local/bin/unmount-amkdfs.sh"
+UMOUNT_SCRIPT="/usr/local/bin/unmount-amkdfs.sh"

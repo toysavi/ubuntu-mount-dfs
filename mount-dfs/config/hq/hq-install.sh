@@ -1,6 +1,7 @@
 #!/bin/bash
 USERNAME="$(whoami)"
 SERVER="amkcambodia.com"
+CREDENTIALS_FILE="~/.smbcredentials"
 HQ_COLLAB_SHARE_PATH="amkdfs/Collaboration/AHO/ITI"
 HQ_DEPT_SHARE_PATH="amkdfs/Dept_Doc/CIO/ITI"
 HQ_HOME_BASE_PATH="amkdfs/StaffDoc/ITD"
@@ -8,8 +9,6 @@ HQ_HOME_BASE_PATH="amkdfs/StaffDoc/ITD"
 COLLAB_SHARE_PATH="$HQ_COLLAB_SHARE_PATH"
 DEPT_SHARE_PATH="$HQ_DEPT_SHARE_PATH"
 HOME_SHARE_PATH="$HQ_HOME_BASE_PATH/\$USERNAME"
-
-source .env/credentials_file
 
 COLLAB_MOUNTPOINT="/media/Collaboration-Q"
 DEPT_MOUNTPOINT="/media/Department-N"
