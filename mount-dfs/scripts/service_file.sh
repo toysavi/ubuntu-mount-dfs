@@ -3,7 +3,7 @@
 # UMOUNT_SCRIPT="/usr/local/bin/unmount-amkdfs.sh"
 # SERVICE_FILE="/etc/systemd/system/mount-amkdfs.service"
 
-source .env/services_fie
+source .env/services_file
 source .env/umount_script
 source .env/mount_script
 
