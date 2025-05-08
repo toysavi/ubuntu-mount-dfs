@@ -60,11 +60,6 @@ case "$SETUP_CHOICE" in
         echo "🔧 Creating auto mount services ..."
         source ./script/services_file.sh
 
-        source .env/services_file
-        
-        # Make them executable
-        sudo chmod +x "$SERVICE_FILE"
-
         # --- Reload and enable the service ---
         sudo systemctl daemon-reload
         sudo systemctl enable mount-amkdfs.service
