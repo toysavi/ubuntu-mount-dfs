@@ -58,7 +58,7 @@ case "$SETUP_CHOICE" in
         # --- Create the systemd service ---
         echo ""
         echo "🔧 Creating auto mount services ..."
-        source ./script/services_file.sh
+        source ./scripts/services_file.sh
 
         # --- Reload and enable the service ---
         sudo systemctl daemon-reload
