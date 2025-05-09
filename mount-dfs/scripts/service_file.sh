@@ -17,7 +17,7 @@ Wants=network-online.target
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=$MOUNT_SCRIPT
-ExecStop=$UNMOUNT_SCRIPT
+ExecStop=$UMOUNT_SCRIPT
 
 [Install]
 WantedBy=multi-user.target
