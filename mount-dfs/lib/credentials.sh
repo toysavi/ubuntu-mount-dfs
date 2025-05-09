@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CREDENTIALS_FILE="$HOME/.smbcredentials"
+CREDENTIALS_FILE="/etc/.smbcredentials"
 SERVER="amkcambodia.com"
 
 # --- Check for existing Kerberos ticket ---
