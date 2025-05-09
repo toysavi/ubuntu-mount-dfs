@@ -1,7 +1,7 @@
 #!/bin/bash
 USERNAME="$(whoami)"
 SERVER="amkcambodia.com"
-CREDENTIALS_FILE="~/.smbcredentials"
+CREDENTIALS_FILE="/etc/.smbcredentials"
 HQ_COLLAB_SHARE_PATH="amkdfs/Collaboration/AHO/ITI"
 HQ_DEPT_SHARE_PATH="amkdfs/Dept_Doc/CIO/ITI"
 HQ_HOME_BASE_PATH="amkdfs/StaffDoc/ITD"
